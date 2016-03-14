@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB_Hotel_IDNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityType Name="Agencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Apartamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Andar" Type="int" Nullable="false" />
+          <Property Name="Numero" Type="int" Nullable="false" />
+          <Property Name="Tipo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cpf" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="Profissao" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MeioTransporte" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Motivo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Consumo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdApto" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdTempo" Type="int" Nullable="false" />
+          <Property Name="IdServico" Type="int" Nullable="false" />
+          <Property Name="IdProduto" Type="int" Nullable="false" />
+          <Property Name="ValorConsumo" Type="int" Nullable="false" />
+          <Property Name="Quantidade" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Hospedagem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdApto" Type="int" Nullable="false" />
+          <Property Name="IdAgencia" Type="int" Nullable="false" />
+          <Property Name="IdCliente" Type="int" Nullable="false" />
+          <Property Name="IdTempo" Type="int" Nullable="false" />
+          <Property Name="ValorFaturado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Servico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Tempo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ano" Type="int" Nullable="false" />
+          <Property Name="Trimestre" Type="int" Nullable="false" />
+          <Property Name="Mes" Type="varchar" MaxLength="9" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Consumo__IdApto__1BFD2C07">
+          <End Role="Apartamento" Type="Self.Apartamento" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdApto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdClien__1CF15040">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdProdu__1FCDBCEB">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdServi__1ED998B2">
+          <End Role="Servico" Type="Self.Servico" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdServico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdTempo__1DE57479">
+          <End Role="Tempo" Type="Self.Tempo" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tempo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdTempo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdAge__239E4DCF">
+          <End Role="Agencia" Type="Self.Agencia" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdAgencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdApt__22AA2996">
+          <End Role="Apartamento" Type="Self.Apartamento" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdApto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdCli__24927208">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdTem__25869641">
+          <End Role="Tempo" Type="Self.Tempo" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tempo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdTempo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_Hotel_IDNModelStoreContainer">
+          <EntitySet Name="Agencia" EntityType="Self.Agencia" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Apartamento" EntityType="Self.Apartamento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Consumo" EntityType="Self.Consumo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospedagem" EntityType="Self.Hospedagem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Servico" EntityType="Self.Servico" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Tempo" EntityType="Self.Tempo" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Consumo__IdApto__1BFD2C07" Association="Self.FK__Consumo__IdApto__1BFD2C07">
+            <End Role="Apartamento" EntitySet="Apartamento" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdClien__1CF15040" Association="Self.FK__Consumo__IdClien__1CF15040">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdProdu__1FCDBCEB" Association="Self.FK__Consumo__IdProdu__1FCDBCEB">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdServi__1ED998B2" Association="Self.FK__Consumo__IdServi__1ED998B2">
+            <End Role="Servico" EntitySet="Servico" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdTempo__1DE57479" Association="Self.FK__Consumo__IdTempo__1DE57479">
+            <End Role="Tempo" EntitySet="Tempo" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdAge__239E4DCF" Association="Self.FK__Hospedage__IdAge__239E4DCF">
+            <End Role="Agencia" EntitySet="Agencia" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdApt__22AA2996" Association="Self.FK__Hospedage__IdApt__22AA2996">
+            <End Role="Apartamento" EntitySet="Apartamento" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdCli__24927208" Association="Self.FK__Hospedage__IdCli__24927208">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdTem__25869641" Association="Self.FK__Hospedage__IdTem__25869641">
+            <End Role="Tempo" EntitySet="Tempo" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB_Hotel_IDNModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityType Name="Agencia">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Hospedagem" Relationship="Self.FK__Hospedage__IdAge__239E4DCF" FromRole="Agencia" ToRole="Hospedagem" />
+        </EntityType>
+        <EntityType Name="Apartamento">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Andar" Type="Int32" Nullable="false" />
+          <Property Name="Numero" Type="Int32" Nullable="false" />
+          <Property Name="Tipo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consumo" Relationship="Self.FK__Consumo__IdApto__1BFD2C07" FromRole="Apartamento" ToRole="Consumo" />
+          <NavigationProperty Name="Hospedagem" Relationship="Self.FK__Hospedage__IdApt__22AA2996" FromRole="Apartamento" ToRole="Hospedagem" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cpf" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Profissao" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MeioTransporte" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Motivo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consumo" Relationship="Self.FK__Consumo__IdClien__1CF15040" FromRole="Cliente" ToRole="Consumo" />
+          <NavigationProperty Name="Hospedagem" Relationship="Self.FK__Hospedage__IdCli__24927208" FromRole="Cliente" ToRole="Hospedagem" />
+        </EntityType>
+        <EntityType Name="Consumo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdApto" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdTempo" Type="Int32" Nullable="false" />
+          <Property Name="IdServico" Type="Int32" Nullable="false" />
+          <Property Name="IdProduto" Type="Int32" Nullable="false" />
+          <Property Name="ValorConsumo" Type="Int32" Nullable="false" />
+          <Property Name="Quantidade" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Apartamento" Relationship="Self.FK__Consumo__IdApto__1BFD2C07" FromRole="Consumo" ToRole="Apartamento" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Consumo__IdClien__1CF15040" FromRole="Consumo" ToRole="Cliente" />
+          <NavigationProperty Name="Produto" Relationship="Self.FK__Consumo__IdProdu__1FCDBCEB" FromRole="Consumo" ToRole="Produto" />
+          <NavigationProperty Name="Servico" Relationship="Self.FK__Consumo__IdServi__1ED998B2" FromRole="Consumo" ToRole="Servico" />
+          <NavigationProperty Name="Tempo" Relationship="Self.FK__Consumo__IdTempo__1DE57479" FromRole="Consumo" ToRole="Tempo" />
+        </EntityType>
+        <EntityType Name="Hospedagem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdApto" Type="Int32" Nullable="false" />
+          <Property Name="IdAgencia" Type="Int32" Nullable="false" />
+          <Property Name="IdCliente" Type="Int32" Nullable="false" />
+          <Property Name="IdTempo" Type="Int32" Nullable="false" />
+          <Property Name="ValorFaturado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Agencia" Relationship="Self.FK__Hospedage__IdAge__239E4DCF" FromRole="Hospedagem" ToRole="Agencia" />
+          <NavigationProperty Name="Apartamento" Relationship="Self.FK__Hospedage__IdApt__22AA2996" FromRole="Hospedagem" ToRole="Apartamento" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK__Hospedage__IdCli__24927208" FromRole="Hospedagem" ToRole="Cliente" />
+          <NavigationProperty Name="Tempo" Relationship="Self.FK__Hospedage__IdTem__25869641" FromRole="Hospedagem" ToRole="Tempo" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Descricao" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consumo" Relationship="Self.FK__Consumo__IdProdu__1FCDBCEB" FromRole="Produto" ToRole="Consumo" />
+        </EntityType>
+        <EntityType Name="Servico">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consumo" Relationship="Self.FK__Consumo__IdServi__1ED998B2" FromRole="Servico" ToRole="Consumo" />
+        </EntityType>
+        <EntityType Name="Tempo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ano" Type="Int32" Nullable="false" />
+          <Property Name="Trimestre" Type="Int32" Nullable="false" />
+          <Property Name="Mes" Type="String" MaxLength="9" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Consumo" Relationship="Self.FK__Consumo__IdTempo__1DE57479" FromRole="Tempo" ToRole="Consumo" />
+          <NavigationProperty Name="Hospedagem" Relationship="Self.FK__Hospedage__IdTem__25869641" FromRole="Tempo" ToRole="Hospedagem" />
+        </EntityType>
+        <Association Name="FK__Hospedage__IdAge__239E4DCF">
+          <End Role="Agencia" Type="Self.Agencia" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Agencia">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdAgencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdApto__1BFD2C07">
+          <End Role="Apartamento" Type="Self.Apartamento" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdApto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdApt__22AA2996">
+          <End Role="Apartamento" Type="Self.Apartamento" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Apartamento">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdApto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdClien__1CF15040">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdCli__24927208">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdCliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdProdu__1FCDBCEB">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdProduto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdServi__1ED998B2">
+          <End Role="Servico" Type="Self.Servico" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Servico">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdServico" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Consumo__IdTempo__1DE57479">
+          <End Role="Tempo" Type="Self.Tempo" Multiplicity="1" />
+          <End Role="Consumo" Type="Self.Consumo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tempo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Consumo">
+              <PropertyRef Name="IdTempo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Hospedage__IdTem__25869641">
+          <End Role="Tempo" Type="Self.Tempo" Multiplicity="1" />
+          <End Role="Hospedagem" Type="Self.Hospedagem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Tempo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Hospedagem">
+              <PropertyRef Name="IdTempo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB_Hotel_IDNEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Agencia" EntityType="Self.Agencia" />
+          <EntitySet Name="Apartamento" EntityType="Self.Apartamento" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Consumo" EntityType="Self.Consumo" />
+          <EntitySet Name="Hospedagem" EntityType="Self.Hospedagem" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" />
+          <EntitySet Name="Servico" EntityType="Self.Servico" />
+          <EntitySet Name="Tempo" EntityType="Self.Tempo" />
+          <AssociationSet Name="FK__Hospedage__IdAge__239E4DCF" Association="Self.FK__Hospedage__IdAge__239E4DCF">
+            <End Role="Agencia" EntitySet="Agencia" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdApto__1BFD2C07" Association="Self.FK__Consumo__IdApto__1BFD2C07">
+            <End Role="Apartamento" EntitySet="Apartamento" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdApt__22AA2996" Association="Self.FK__Hospedage__IdApt__22AA2996">
+            <End Role="Apartamento" EntitySet="Apartamento" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdClien__1CF15040" Association="Self.FK__Consumo__IdClien__1CF15040">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdCli__24927208" Association="Self.FK__Hospedage__IdCli__24927208">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdProdu__1FCDBCEB" Association="Self.FK__Consumo__IdProdu__1FCDBCEB">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdServi__1ED998B2" Association="Self.FK__Consumo__IdServi__1ED998B2">
+            <End Role="Servico" EntitySet="Servico" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Consumo__IdTempo__1DE57479" Association="Self.FK__Consumo__IdTempo__1DE57479">
+            <End Role="Tempo" EntitySet="Tempo" />
+            <End Role="Consumo" EntitySet="Consumo" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Hospedage__IdTem__25869641" Association="Self.FK__Hospedage__IdTem__25869641">
+            <End Role="Tempo" EntitySet="Tempo" />
+            <End Role="Hospedagem" EntitySet="Hospedagem" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB_Hotel_IDNModelStoreContainer" CdmEntityContainer="DB_Hotel_IDNEntities">
+          <EntitySetMapping Name="Agencia">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Agencia">
+              <MappingFragment StoreEntitySet="Agencia">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Apartamento">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Apartamento">
+              <MappingFragment StoreEntitySet="Apartamento">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Andar" ColumnName="Andar" />
+                <ScalarProperty Name="Numero" ColumnName="Numero" />
+                <ScalarProperty Name="Tipo" ColumnName="Tipo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Cpf" ColumnName="Cpf" />
+                <ScalarProperty Name="Profissao" ColumnName="Profissao" />
+                <ScalarProperty Name="MeioTransporte" ColumnName="MeioTransporte" />
+                <ScalarProperty Name="Motivo" ColumnName="Motivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Consumo">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Consumo">
+              <MappingFragment StoreEntitySet="Consumo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdApto" ColumnName="IdApto" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdTempo" ColumnName="IdTempo" />
+                <ScalarProperty Name="IdServico" ColumnName="IdServico" />
+                <ScalarProperty Name="IdProduto" ColumnName="IdProduto" />
+                <ScalarProperty Name="ValorConsumo" ColumnName="ValorConsumo" />
+                <ScalarProperty Name="Quantidade" ColumnName="Quantidade" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospedagem">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Hospedagem">
+              <MappingFragment StoreEntitySet="Hospedagem">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="IdApto" ColumnName="IdApto" />
+                <ScalarProperty Name="IdAgencia" ColumnName="IdAgencia" />
+                <ScalarProperty Name="IdCliente" ColumnName="IdCliente" />
+                <ScalarProperty Name="IdTempo" ColumnName="IdTempo" />
+                <ScalarProperty Name="ValorFaturado" ColumnName="ValorFaturado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produto">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Produto">
+              <MappingFragment StoreEntitySet="Produto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Servico">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Servico">
+              <MappingFragment StoreEntitySet="Servico">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tempo">
+            <EntityTypeMapping TypeName="DB_Hotel_IDNModel.Tempo">
+              <MappingFragment StoreEntitySet="Tempo">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ano" ColumnName="Ano" />
+                <ScalarProperty Name="Trimestre" ColumnName="Trimestre" />
+                <ScalarProperty Name="Mes" ColumnName="Mes" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
